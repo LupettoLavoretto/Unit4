@@ -568,6 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1520819976205777392, guid: a20342015e15ac347b9882e05d921f9d, type: 3}
+  powerUp: {fileID: 8799563427448170840, guid: 2a9fe82eb86e7fe4d999be53972400d3, type: 3}
   spawnRange: 10
   enemyCount: 0
   waveNumber: 1
@@ -869,6 +870,10 @@ PrefabInstance:
     - target: {fileID: 8799563427448170840, guid: 2a9fe82eb86e7fe4d999be53972400d3, type: 3}
       propertyPath: m_Name
       value: Powerup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799563427448170840, guid: 2a9fe82eb86e7fe4d999be53972400d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
