@@ -6,12 +6,14 @@ public class SpawnManagerX : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
+    public GameObject turboBoostPrefab;
 
     private float spawnRangeX = 10;
     private float spawnZMin = 15; // set min spawn Z
     private float spawnZMax = 25; // set max spawn Z
 
     public int enemyCount;
+    public float enemySpeed;
     public int waveCount = 1;
 
 
@@ -20,7 +22,7 @@ public class SpawnManagerX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         if (enemyCount == 0)
         {
@@ -41,6 +43,7 @@ public class SpawnManagerX : MonoBehaviour
     void SpawnEnemyWave(int enemiesToSpawn)
     {
         Vector3 powerupSpawnOffset = new Vector3(0, 0, -15); // make powerups spawn at player end
+        Vector3 turboBoostSpawnOffset = new Vector3(0, 0, -15);
 
         // If no powerups remain, spawn a powerup
         if (GameObject.FindGameObjectsWithTag("Powerup").Length == 0) // check that there are zero powerups
@@ -48,13 +51,22 @@ public class SpawnManagerX : MonoBehaviour
             Instantiate(powerupPrefab, GenerateSpawnPosition() + powerupSpawnOffset, powerupPrefab.transform.rotation);
         }
 
+        // If no turboBoost remain, spawn a turboBoost
+        if (GameObject.FindGameObjectsWithTag("turboBoost").Length == 0) // check that there are zero turboBoost
+        {
+            Instantiate(turboBoostPrefab, GenerateSpawnPosition() + turboBoostSpawnOffset, turboBoostPrefab.transform.rotation);
+        }
+
+
+
         // Spawn number of enemy balls based on wave number
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < waveCount; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
         }
 
         waveCount++;
+        enemySpeed = enemySpeed +50;
         ResetPlayerPosition(); // put player back at start
 
     }
