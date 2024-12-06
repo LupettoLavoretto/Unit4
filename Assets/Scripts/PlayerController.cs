@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 1;
     private Rigidbody playerRb;
-    private GameObject focalPoint; 
+    private GameObject focalPoint;
+
 
     // Start is called before the first frame update
     void Start()
