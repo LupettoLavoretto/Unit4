@@ -13,8 +13,8 @@ public class EnemyX : MonoBehaviour
     {
         enemyRb = GetComponent<Rigidbody>();
         playerGoal = GameObject.Find("Player");
-        speed = GetComponent<SpawnManagerX>().enemySpeed;
-
+        //speed = GetComponent<SpawnManagerX>().enemySpeed;
+        speed = FindObjectOfType<SpawnManagerX>().enemySpeed;
     }
 
     // Update is called once per frame
