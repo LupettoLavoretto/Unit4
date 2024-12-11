@@ -37,17 +37,24 @@ public class NewBehaviourScript : MonoBehaviour
 
     //Se clicco il tasto destro del mouse, ho bisogno che venga distrutto l'oggetto che tocco.
     private void OnMouseDown()
-    {
-        Destroy(gameObject);
-        //Così chiamo e aggiorno il punteggio dal game manager script
-        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
-        gameManager.UpdateScore(pointValue);
+    {   if(gameManager.isGameActive)
+        {
+            Destroy(gameObject);
+            //Così chiamo e aggiorno il punteggio dal game manager script
+            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            gameManager.UpdateScore(pointValue);
+        }
+
     }
 
     //Se l'oggetto tocca "Sensor", viene distrutto.
     private void OnTriggerEnter (Collider other)
     {
         Destroy(gameObject);
+        if(!gameObject.CompareTag("Bad"))
+        {
+            gameManager.GameOver();
+        }
     }
 
 

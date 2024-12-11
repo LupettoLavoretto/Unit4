@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +13,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Gestione punteggio")]
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameOverText;
+    public bool isGameActive;
     private int score;
+    public Button restartButton;
 
 
 
@@ -19,9 +24,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //L'ordine del codice conta: isGameActive deve essere prima della coroutine, o non parte nulla :D
+        isGameActive = true;
         StartCoroutine(SpawnTarget());
         score = 0;
         UpdateScore(0);
+
     }
 
     // Update is called once per frame
@@ -32,7 +40,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnTarget()
     {
-        while(true){
+        //Lo spawn si ferma se il gioco è disattivato, quindi Game Over
+        while(isGameActive){
             //Qui diciamo di attendere per il tempo indicato da SpawnRate
             yield return new WaitForSeconds(spawnRate);
             //Qui chiamiamo un index che prende un valore random tra 0 e la quantità massima di elementi nella nostra lista.
@@ -49,4 +58,19 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
 
     }
+
+    public void GameOver() 
+    {
+        isGameActive = false;
+        gameOverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+
+    }
+
+    //Per far ripartire il gioco.
+    //Nota importante: chiamiamo la funzione poi sul bottone, sotto "OnClick()"così da configurarlo
+     public void RestartGame()
+     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+     } 
 }
