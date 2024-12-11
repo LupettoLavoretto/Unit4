@@ -11,10 +11,16 @@ public class NewBehaviourScript : MonoBehaviour
     private float maxTorque = 10;
     private float xRange = 4;
     private float ySpawnPos = 6;
+    public int pointValue;
+    public ParticleSystem explosionParticle;
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         targetRb = GetComponent<Rigidbody>();
+
+        //Per chiamare il game manager
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         targetRb.AddForce(RandomForce(), ForceMode.Impulse);
 
@@ -33,6 +39,9 @@ public class NewBehaviourScript : MonoBehaviour
     private void OnMouseDown()
     {
         Destroy(gameObject);
+        //Così chiamo e aggiorno il punteggio dal game manager script
+        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+        gameManager.UpdateScore(pointValue);
     }
 
     //Se l'oggetto tocca "Sensor", viene distrutto.
@@ -41,7 +50,7 @@ public class NewBehaviourScript : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+
     //Moltiplica un valore già esistente per i due estremi del Random.Range
     Vector3 RandomForce(){
         return Vector3.up * Random.Range(minSpeed,maxSpeed);
