@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public bool isGameActive;
     private int score;
     public Button restartButton;
+    [Header("UI")]
+    public GameObject titleScreen;
 
 
 
@@ -24,11 +26,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //L'ordine del codice conta: isGameActive deve essere prima della coroutine, o non parte nulla :D
-        isGameActive = true;
-        StartCoroutine(SpawnTarget());
-        score = 0;
-        UpdateScore(0);
+
 
     }
 
@@ -73,4 +71,16 @@ public class GameManager : MonoBehaviour
      {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
      } 
+
+      public void StartGame(int difficulty)
+      {
+        //L'ordine del codice conta: isGameActive deve essere prima della coroutine, o non parte nulla :D
+        isGameActive = true;
+        //Più è alto il numero con cui dividiamo lo spawnRate, più alta è la frequenza di spawning degli oggetti
+        spawnRate /= difficulty;
+        StartCoroutine(SpawnTarget());
+        score = 0;
+        UpdateScore(0);
+        titleScreen.gameObject.SetActive(false);
+      }
 }
